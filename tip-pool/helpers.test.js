@@ -1,64 +1,64 @@
-describe("Utility Functions Test Suite (with setup and tear-down)", function() {
+describe("Utilities test (with setup and tear-down)", function() {
     beforeEach(function () {
-      billAmtInput.value = 75;
-      tipAmtInput.value = 15;
+      billAmtInput.value = 100;
+      tipAmtInput.value = 20;
       submitPaymentInfo();
     });
   
-    it('should calculate the total tip amount of all payments on calculateTotal()', function () {
-      expect(calculateTotal('tipAmt')).toEqual(15);
+    it('should sum total tip amount of all payments on sumPaymentTotal()', function () {
+      expect(sumPaymentTotal('tipAmt')).toEqual(20);
+  
+      billAmtInput.value = 200;
+      tipAmtInput.value = 40;
+  
+      submitPaymentInfo();
+  
+      expect(sumPaymentTotal('tipAmt')).toEqual(60);
+    });
+  
+    it('should sum total bill amount of all payments on sumPaymentTotal()', function () {
+      expect(sumPaymentTotal('billAmt')).toEqual(100);
+  
+      billAmtInput.value = 200;
+      tipAmtInput.value = 40;
+  
+      submitPaymentInfo();
+  
+      expect(sumPaymentTotal('billAmt')).toEqual(300);
+    });
+  
+    it('should sum total tip percent on sumPaymentTotal()', function () {
+      expect(sumPaymentTotal('tipPercent')).toEqual(20);
   
       billAmtInput.value = 100;
       tipAmtInput.value = 20;
   
       submitPaymentInfo();
   
-      expect(calculateTotal('tipAmt')).toEqual(35);
+      expect(sumPaymentTotal('tipPercent')).toEqual(40);
     });
   
-    it('should calculate the total bill amount of all payments on calculateTotal()', function () {
-      expect(calculateTotal('billAmt')).toEqual(175);
-  
-      billAmtInput.value = 125;
-      tipAmtInput.value = 25;
-  
-      submitPaymentInfo();
-  
-      expect(calculateTotal('billAmt')).toEqual(300);
+    it('should sum tip percent of a single tip on calculateTipPercent()', function () {
+      expect(calculateTipPercent(100, 23)).toEqual(23);
+      expect(calculateTipPercent(111, 11)).toEqual(10);
     });
   
-    it('should calculate the total tip percent on calculateTotal()', function () {
-      expect(calculateTotal('tipPercent')).toEqual(20);
+    it('should generate new td from value and append to tr on appendTd(tr, value)', function () {
+      let newTr = document.createElement('tr');
   
-      billAmtInput.value = 75;
-      tipAmtInput.value = 15;
+      appendTd(newTr, 'test');
   
-      submitPaymentInfo();
-  
-      expect(calculateTotal('tipPercent')).toEqual(26.67);
+      expect(newTr.children.length).toEqual(1);
+      expect(newTr.firstChild.innerHTML).toEqual('test');
     });
   
-    it('should calculate tip percent of a single tip on calculateTipPercent()', function () {
-      expect(calculateTipPercent(75, 15)).toEqual(20);
-      expect(calculateTipPercent(100, 25)).toEqual(25);
-    });
+    it('should generate delete td and append to tr on appendDeleteBtn(tr, type)', function () {
+      let newTr = document.createElement('tr');
   
-    it('should create a new table cell with content and append it to a table row on appendTableCell()', function () {
-      let newRow = document.createElement('tr');
+      appendDeleteBtn(newTr);
   
-      appendTableCell(newRow, 'test');
-  
-      expect(newRow.children.length).toEqual(1);
-      expect(newRow.firstChild.innerHTML).toEqual('test');
-    });
-  
-    it('should create a delete button cell and append it to a table row on appendDeleteBtnCell()', function () {
-      let newRow = document.createElement('tr');
-  
-      appendDeleteBtnCell(newRow);
-  
-      expect(newRow.children.length).toEqual(1);
-      expect(newRow.firstChild.innerHTML).toEqual('X');
+      expect(newTr.children.length).toEqual(1);
+      expect(newTr.firstChild.innerHTML).toEqual('X');
     });
   
     afterEach(function() {
@@ -73,4 +73,3 @@ describe("Utility Functions Test Suite (with setup and tear-down)", function() {
       paymentId = 0;
     });
   });
-  

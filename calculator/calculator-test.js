@@ -1,28 +1,30 @@
-it('should calculate the monthly payment correctly', function() {
-  const loan1 = {
-    amount: 15000,
-    years: 5,
-    rate: 4.2
+it('should calculate the monthly rate correctly', function() {
+  // ...
+  const values = {
+    amount: 10000,
+    years: 8,
+    rate: 5.8
   };
-  expect(calculateMonthlyPayment(loan1)).toEqual('277.99');
+  expect(calculateMonthlyPayment(values)).toEqual('130.44');
 });
 
-it("should round the result to 2 decimal places", function() {
-  const loan2 = {
-    amount: 12345,
-    years: 7,
-    rate: 6.75
+
+it("should return a result with 2 decimal places", function() {
+  const values = {
+    amount: 10043,
+    years: 8,
+    rate: 5.8
   };
-  expect(calculateMonthlyPayment(loan2)).toEqual('194.32');
+  expect(calculateMonthlyPayment(values)).toEqual('131.00');
 });
 
-it("should handle very high loan amounts", function() {
-  const loan3 = {
-    amount: 1000000,
-    years: 10,
-    rate: 3.5
+it("should handle terribly high interest rates", function() {
+  const values = {
+    amount: 1000,
+    years: 40,
+    rate: 99
   };
-  expect(calculateMonthlyPayment(loan3)).toEqual('9661.44');
+  expect(calculateMonthlyPayment(values)).toEqual('82.50');
 });
 
 /// etc
